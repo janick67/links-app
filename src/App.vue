@@ -42,83 +42,31 @@ export default {
   },
   data: function () {
     return{
-      list: false,
-      links:[
-        {
-          id:1,
-          name:'Google',
-          url: 'https://www.google.com/',
-          description:'wyszukiwarka'
-        },
-        {
-          id:2,
-          name:'Gmail',
-          url:'https://www.google.com/gmail',
-          description:'poczta'
-        },
-        {
-          id:3,
-          name:'YouTube',
-          url:'https://www.youtube.com',
-          description:'rozrywka'
-        },
-        {
-          id:4,
-          name:'Facebook',
-          url:'https://www.facebook.com/',
-          description:'media społecznościowe'
-        },
-        {
-          id:1+4,
-          name:'Google',
-          url: 'https://www.google.com/',
-          description:'wyszukiwarka'
-        },
-        {
-          id:2+4,
-          name:'Gmail',
-          url:'https://www.google.com/gmail',
-          description:'poczta'
-        },
-        {
-          id:3+4,
-          name:'YouTube',
-          url:'https://www.youtube.com',
-          description:'rozrywka'
-        },
-        {
-          id:4+4,
-          name:'Facebook',
-          url:'https://www.facebook.com/',
-          description:'media społecznościowe'
-        },
-             {
-          id:1+8,
-          name:'Google',
-          url: 'https://www.google.com/',
-          description:'wyszukiwarka'
-        },
-        {
-          id:2+8,
-          name:'Gmail',
-          url:'https://www.google.com/gmail',
-          description:'poczta'
-        },
-        {
-          id:3+8,
-          name:'YouTube',
-          url:'https://www.youtube.com',
-          description:'rozrywka'
-        },
-        {
-          id:4+8,
-          name:'Facebook',
-          url:'https://www.facebook.com/',
-          description:'media społecznościowe'
-        }
-      ]
+      list: true,
+      links:[]
     }
     //
+  },
+  created: function(){
+    console.log('test');
+    
+    fetch("/api/login", {
+        method: "post",
+        headers: {
+            "Content-type": "application/json; charset=UTF-8"
+        },
+        body: JSON.stringify({email:'pm',password:'pm'})
+    }).then(res => {
+      return res.text()
+    })
+    .then(res => {
+        console.log(res);
+    })
+
+    fetch("/api/links").then(res => res.json()).then(res =>{
+      console.log(res)
+      this.links = res;
+    })
   },
   methods:{
     chooseList: function(){

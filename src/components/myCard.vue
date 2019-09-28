@@ -1,6 +1,6 @@
 <template>
   <v-card
-    max-width="344"
+    width="250"
     class="mx-auto mt-5"
   >
     <v-card-title>{{link.name}}</v-card-title>
