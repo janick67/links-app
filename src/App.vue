@@ -1,28 +1,43 @@
 <template>
-  <div id="app">
-    <img alt="Vue logo" src="./assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
-  </div>
+  <v-app>
+    {{links}}
+  </v-app>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
+import HelloWorld from './components/HelloWorld';
 
 export default {
-  name: 'app',
+  name: 'App',
   components: {
-    HelloWorld
-  }
-}
+    HelloWorld,
+  },
+  data: function () {
+    return{
+      links:[
+        {
+          name:'google',
+          url: 'https://www.google.com/',
+          description:'wyszukiwarka'
+        },
+        {
+          name:'gmail',
+          url:'https://www.google.com/gmail',
+          description:'poczta'
+        },
+        {
+          name:'YouTube',
+          url:'https://www.youtube.com',
+          description:'rozrywka'
+        },
+        {
+          name:'YouTube',
+          url:'https://www.facebook.com/',
+          description:'media społecznościowe'
+        }
+      ]
+    }
+    //
+  },
+};
 </script>
-
-<style>
-#app {
-  font-family: 'Avenir', Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
-}
-</style>
