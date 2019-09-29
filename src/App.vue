@@ -1,11 +1,11 @@
 <template>
   <v-app>
     <v-card
-    width="100%"
-    class="mx-auto"
+    width="80%"
+    class="mx-auto my-4"
   >
     <v-card-title>
-      Lista linków
+      <p class="my-auto" style="padding-left: 28px;">Lista linków</p>
       <div class="flex-grow-1"></div>
       <v-btn icon v-on:click="chooseList">
         <v-icon>mdi-format-list-bulleted</v-icon>
@@ -55,7 +55,7 @@ export default {
         headers: {
             "Content-type": "application/json; charset=UTF-8"
         },
-        body: JSON.stringify({email:'pm',password:'pm'})
+        body: JSON.stringify({email:'admin',password:'admin'})
     }).then(res => {
       return res.text()
     })
