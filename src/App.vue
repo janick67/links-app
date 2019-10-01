@@ -1,6 +1,8 @@
 <template>
   <v-app>
-    <v-card
+    <signin v-if="login_page" @Signed="onSigned"/>
+    <v-card 
+    v-else
     width="80%"
     class="mx-auto my-4"
   >
@@ -12,6 +14,10 @@
       </v-btn>
       <v-btn icon v-on:click="chooseGrid">
         <v-icon>mdi-grid</v-icon>
+      </v-btn>
+      <v-btn v-on:click="chooseList" class="ml-5" @click="onLogout">
+        Wyloguj 
+        <v-icon class="ml-1">mdi-exit-to-app</v-icon>
       </v-btn>
     </v-card-title>
     <v-card-text>
@@ -33,47 +39,53 @@
 <script>
 import myCard from './components/myCard.vue';
 import ListElem from './components/ListElem.vue';
+import Signin from './components/Signin.vue';
 
 export default {
   name: 'App',
   components: {
+    Signin,
     myCard,
     ListElem
   },
   data: function () {
     return{
       list: true,
+      login_page: false,
       links:[]
     }
     //
   },
   created: function(){
-    console.log('test');
-    
-    fetch("/api/login", {
-        method: "post",
-        headers: {
-            "Content-type": "application/json; charset=UTF-8"
-        },
-        body: JSON.stringify({email:'admin',password:'admin'})
-    }).then(res => {
-      return res.text()
-    })
-    .then(res => {
-        console.log(res);
-    })
-
-    fetch("/api/links").then(res => res.json()).then(res =>{
-      console.log(res)
-      this.links = res;
-    })
+     this.fetchData()
   },
   methods:{
     chooseList: function(){
       this.list = true;
     },
     chooseGrid: function(){
-      this.list = false;
+      this.list = false
+    },
+    onSigned: function(){
+      this.login_page = false
+      this.fetchData()
+    },
+    onLogout: function(){
+      this.login_page = true
+      this.links = [] 
+      fetch("/api/logout").then(res=>this.fetchData())
+    },
+    fetchData: function(){
+       console.log('pobieram dane...')
+
+      fetch("/api/links").then(res => res.json()).then(res =>{
+        console.log(res)
+        if (res.error == 'Najpierw się zaloguj'){
+          this.login_page = true;
+        }else{
+          this.links = res;
+        }
+      })
     }
   }
 };
