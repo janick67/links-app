@@ -10,7 +10,7 @@
       height="150"
     ></v-img>
     <v-card-title>{{link.name}}</v-card-title>
-    <v-card-text>{{link.url}}</v-card-text>
+    <v-card-text>{{link.description}}</v-card-text>
   </v-card>
 </template>
 

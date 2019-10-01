@@ -1,5 +1,10 @@
 <template>
   <v-container>
+    <v-layout row v-if="error">
+      <v-flex xs12 sm6 offset-sm3>
+        <Alert @dismissed="onDismissed" :text="error.message"></Alert>
+      </v-flex>
+    </v-layout>
     <v-layout row>
       <v-flex xs12 sm6 offset-sm3>
         <v-card>
@@ -28,7 +33,7 @@
                 </v-layout>
                 <v-layout row>
                   <v-flex xs12>
-                    <v-btn type="submit">
+                    <v-btn type="submit" :disabled="loading" :loading="loading">
                       Sign in
                        <span slot="loader" class="custom-loader">
                         <v-icon light>mdi-cached</v-icon>
@@ -46,16 +51,27 @@
 </template>
 
 <script>
+import Alert from './Alert.vue';
+
 export default {
+  components: {
+    Alert
+  },
   data () {
     return {
       username: '',
-      password: ''
+      password: '',
+      error: false,
+      loading: false
     }
   },
   methods: {
+    onDismissed () {
+      this.error = false
+    },
     onSignin () {
        console.log('loguje się...')
+       this.loading = true;
       fetch("/api/login", {
           method: "post",
           headers: {
@@ -63,6 +79,7 @@ export default {
           },
           body: JSON.stringify({username: this.username ,password: this.password})
       }).then(res => {
+        this.loading = false;
         return res.json()
       })
       .then(res => {
@@ -70,7 +87,10 @@ export default {
           if (res.user !== null) {
             this.$emit('Signed')
             } 
-          if (res.error !== null) console.log(res.error)
+          if (res.error !== null) {
+            this.error = {message:res.error}
+            console.log(res.error)
+          }
       })
     }
   }

@@ -73,7 +73,7 @@ export default {
     onLogout: function(){
       this.login_page = true
       this.links = [] 
-      fetch("/api/logout").then(res=>this.fetchData())
+      fetch(document.location.origin+"/api/logout").then(res=>this.fetchData())
     },
     fetchData: function(){
        console.log('pobieram dane...')
