@@ -7,7 +7,14 @@
     class="mx-auto my-4"
   >
     <v-card-title>
-      <p class="my-auto" style="padding-left: 28px;">Lista linków</p>
+      <div class="flex-grow-0">
+        <v-img
+        :src="logoURL"
+        width="100"
+        height="70"
+        ></v-img>
+      </div>
+      <p class="my-auto" style="padding-left: 28px;">{{title}}</p>
       <div class="flex-grow-1"></div>
       <v-btn icon v-on:click="chooseList">
         <v-icon>mdi-format-list-bulleted</v-icon>
@@ -16,7 +23,7 @@
         <v-icon>mdi-grid</v-icon>
       </v-btn>
       <v-btn v-on:click="chooseList" class="ml-5" @click="onLogout">
-        Wyloguj 
+        {{logoutText}} 
         <v-icon class="ml-1">mdi-exit-to-app</v-icon>
       </v-btn>
     </v-card-title>
@@ -52,7 +59,10 @@ export default {
     return{
       list: true,
       login_page: false,
-      links:[]
+      links:[],
+      logoURL: 'https://dynamic.brandcrowd.com/asset/logo/4c8f8b36-51b9-4ebf-b20c-00e5c25719c3/logo?v=4&text=Logo+Text+Here',
+      title: 'Lista linków',
+      logoutText: 'Wyloguj'
     }
     //
   },

@@ -3,7 +3,7 @@
   <v-list-item-avatar>
       <v-img
       :src="link.imageURL"
-      width="30"
+      weight="30"
       height="30"
     ></v-img>
         </v-list-item-avatar>
