@@ -82,12 +82,12 @@ export default {
     },
     onLogout: function(){
       this.links = [] 
-      window.location = '/logout'
+      window.location = '../logout'
     },
     fetchData: function(){
        console.log('pobieram dane...')
 
-      fetch("/api/links").then(res => res.json()).then(res =>{
+      fetch("../api/links").then(res => res.json()).then(res =>{
         console.log(res)
         if (res.error == 'Najpierw się zaloguj'){
           window.location.reload(true);

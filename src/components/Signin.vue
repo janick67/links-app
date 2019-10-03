@@ -72,7 +72,7 @@ export default {
     onSignin () {
        console.log('loguje się...')
        this.loading = true;
-      fetch("/login", {
+      fetch("../login", {
           method: "post",
           headers: {
               "Content-type": "application/json; charset=UTF-8"
