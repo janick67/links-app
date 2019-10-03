@@ -81,9 +81,8 @@ export default {
       this.fetchData()
     },
     onLogout: function(){
-      this.login_page = true
       this.links = [] 
-      fetch(document.location.origin+"/api/logout").then(res=>this.fetchData())
+      window.location = '/logout'
     },
     fetchData: function(){
        console.log('pobieram dane...')
@@ -91,7 +90,7 @@ export default {
       fetch("/api/links").then(res => res.json()).then(res =>{
         console.log(res)
         if (res.error == 'Najpierw się zaloguj'){
-          this.login_page = true;
+          window.location.reload(true);
         }else{
           this.links = res;
         }
