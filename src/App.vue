@@ -1,8 +1,6 @@
 <template>
   <v-app>
-    <signin v-if="login_page" @Signed="onSigned"/>
     <v-card 
-    v-else
     width="80%"
     class="mx-auto my-4"
   >
@@ -46,19 +44,16 @@
 <script>
 import myCard from './components/myCard.vue';
 import ListElem from './components/ListElem.vue';
-import Signin from './components/Signin.vue';
 
 export default {
   name: 'App',
   components: {
-    Signin,
     myCard,
     ListElem
   },
   data: function () {
     return{
       list: true,
-      login_page: false,
       links:[],
       logoURL: 'https://dynamic.brandcrowd.com/asset/logo/4c8f8b36-51b9-4ebf-b20c-00e5c25719c3/logo?v=4&text=Logo+Text+Here',
       title: 'Lista linków',
@@ -76,23 +71,20 @@ export default {
     chooseGrid: function(){
       this.list = false
     },
-    onSigned: function(){
-      this.login_page = false
-      this.fetchData()
-    },
     onLogout: function(){
       this.links = [] 
       window.location = '../logout'
     },
     fetchData: function(){
-       console.log('pobieram dane...')
-
       fetch("../api/links").then(res => res.json()).then(res =>{
-        console.log(res)
-        if (res.error == 'Najpierw się zaloguj'){
+        if (res.error !== null){
+          if (res.error == 'Najpierw się zaloguj'){
           window.location.reload(true);
+          }else{
+            console.error(res.error)
+          }
         }else{
-          this.links = res;
+          this.links = res.result;
         }
       })
     }
