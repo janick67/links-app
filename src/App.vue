@@ -27,15 +27,27 @@
     </v-card-title>
     <v-card-text>
       <v-container v-if="list">
-        <v-list>
+        <v-card v-for='group in arrayWithGroups' :key="group.id" class="my-4"> 
+          <v-card-title>{{group[0].groupname}}</v-card-title>
+          <v-card-text>
+            <v-list>
           <v-list-item-group>
-            <ListElem :link="link"  v-for="link in links" :key="link.id"/>
+            <ListElem :link="link"  v-for="link in group" :key="link.id"/>
           </v-list-item-group>
         </v-list>
+          </v-card-text>
+      </v-card>
       </v-container>
-      <v-container v-else class="d-flex align-content-start flex-wrap">
-        <myCard :link="link" v-for="link in links" :key="link.id" />
-      </v-container>
+       <v-container v-else>
+      <v-card v-for='group in arrayWithGroups' :key="group.id" class="my-4"> 
+          <v-card-title>{{group[0].groupname}}</v-card-title>
+          <v-card-text>
+            <v-container  class="d-flex align-content-start flex-wrap">
+            <myCard :link="link" v-for="link in group" :key="link.id" />
+            </v-container>
+          </v-card-text>
+      </v-card>
+       </v-container>
     </v-card-text>
   </v-card>
   </v-app>
@@ -55,6 +67,7 @@ export default {
     return{
       list: true,
       links:[],
+      arrayWithGroups:[],
       logoURL: 'https://dynamic.brandcrowd.com/asset/logo/4c8f8b36-51b9-4ebf-b20c-00e5c25719c3/logo?v=4&text=Logo+Text+Here',
       title: 'Lista linków',
       logoutText: 'Wyloguj'
@@ -67,6 +80,19 @@ export default {
   methods:{
     chooseList: function(){
       this.list = true;
+    },
+    makeGroups: function(array){
+      let objWithGroups ={};
+      array.forEach(el => {
+        if (typeof objWithGroups[el.groupid] == 'undefined') 
+          objWithGroups[el.groupid] = []
+        objWithGroups[el.groupid].push(el);
+      });
+      let arrayWithGroups = []
+      Object.getOwnPropertyNames(objWithGroups).forEach(el=>{
+        arrayWithGroups.push(objWithGroups[el]);
+      })
+      this.arrayWithGroups= arrayWithGroups;
     },
     chooseGrid: function(){
       this.list = false
@@ -85,6 +111,7 @@ export default {
           }
         }else{
           this.links = res.result;
+          this.makeGroups(this.links)
         }
       })
     }
